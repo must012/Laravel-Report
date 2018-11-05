@@ -1,0 +1,337 @@
+/*
+ * Base structure
+ */
+
+div {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+button {
+    font-family: Anton, Sans-Serif, serif;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+p {
+    margin: 0;
+}
+
+hr {
+    margin-top: 8px;
+    background-color: black;
+}
+
+.btn:hover {
+    cursor: pointer;
+}
+
+i {
+    cursor: pointer;
+}
+
+li {
+    padding: 0;
+}
+
+/*
+ * Typography
+ */
+
+h1 {
+    padding-bottom: 9px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+h2 {
+    font-family: 'Anton', sans-serif;
+    margin: 0;
+}
+
+/*
+ * Sidebar
+ */
+.brand {
+    font-size: 2rem;
+    padding: 0;
+    color: white;
+}
+
+.brand:hover {
+    color: white;
+    text-decoration: none;
+    border-right: 0;
+}
+
+.sidebar {
+    background-color: #0059ab;
+}
+
+.side-nav {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.side-nav.hover {
+    background-color: whitesmoke;
+    color: #0059ab;
+}
+
+.side-nav:hover {
+    background-color: whitesmoke;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    padding: 20px 0;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+#tools:hover {
+    cursor: pointer;
+}
+
+#tools > li:nth-child(1) {
+    margin-top: 10px;
+}
+
+.tool-item {
+    padding: 0;
+    background-color: #0059ab;
+}
+
+@media (min-width: 1700px) {
+    .side-nav-1, .side-nav-2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 1700px) {
+    #loginBtn, #regBtn {
+        font-size: 1rem;
+    }
+}
+
+.form-signup input{
+    margin-top: 10px;
+}
+
+.modal-title{
+    font-size: 1.3rem;
+    font-family: 'Anton', sans-serif;
+    font-weight: bold;
+}
+
+/*
+ * sidebar
+ */
+
+/*
+ * th, td, table
+ */
+
+table {
+    box-shadow: 1px 1px 0 1px #f1f3f5;
+}
+
+tbody, thead th {
+    font-weight: bold;
+    text-align: center;
+}
+
+td {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 12px;
+
+}
+
+/*
+ * #uName, .logout
+ */
+
+#uName {
+    margin: 2px auto;
+    font-weight: bold;
+    text-align: center;
+}
+
+#comment-count-box:hover{
+    cursor: pointer;
+}
+
+/*
+ * Board
+ */
+
+
+/*
+ * .detail
+ */
+
+.detail:hover {
+    color: #0984e3;
+    cursor: pointer;
+}
+
+.blueBtn {
+    background-color: #0984e3;
+    color: white;
+    border-color: #0984e3;
+}
+
+.blueBtn:hover {
+    background-color: #0960bf;
+    border-color: #0974d2;
+}
+
+.whiteBtn {
+    background-color: #FFFFFF;
+    color: #666666;
+    border-color: #909090;
+}
+
+.whiteBtn:hover {
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+}
+
+.redBtn {
+    background-color: #d63031;
+    color: white;
+    border-color: #d63031;
+}
+
+.redBtn:hover {
+    background-color: #C73031;
+    border-color: #be3031;
+}
+
+.greBtn {
+    background-color: #5cb85c;
+    color: white;
+    border-color: #4cae4c;
+}
+
+.greBtn:hover {
+    background-color: #4c974c;
+    border-color: #5cb85c;
+}
+
+.yellowBtn {
+    background-color: rgba(255, 238, 51, 0.99);
+    color: black;
+    border-color: #e0cf33;
+}
+
+.yellowBtn:hover {
+    background-color: #dac930;
+    border-color: #b1a12c;
+}
+
+.item-comment-icon {
+    font-size: 1.8rem;
+}
+
+.item-comment-count {
+    font-size: 1.8rem;
+}
+
+
+#nickName {
+    font-family: 'Anton', sans-serif;
+    font-size: 1.2rem;
+}
+
+.contents-list:hover {
+    background-color: whitesmoke;
+    transition: background-color 0.2s;
+}
+
+.fa-sign-in-alt {
+    color: white;
+}
+
+.panel-default {
+    background-color: white;
+    border: 1px solid #BBBBBB;
+}
+
+.view-data, .view-data * {
+    cursor: default;
+}
+
+.panel-heading {
+    border-bottom: 1px solid #BBBBBB;
+}
+
+.contents-panel-body {
+    min-height: 75vh;
+}
+
+.file-scroll {
+    background-color: whitesmoke;
+}
+
+.file-scroll:hover, .file:hover {
+    cursor: pointer;
+}
+
+.file-list {
+
+    border-left: 0;
+    border-right: 0;
+}
+
+#comments > ul > li{
+    border-left: 0;
+}
+
+.tree-comment{
+    border-left: 30px solid whitesmoke !important;
+}
+
+.modal-out{
+    font-size: 3rem;
+}
+
+.modal-out:hover{
+    cursor: pointer;
+}
+
+/*
+ * Detail
+ */
+
+.file-text {
+    background-color: whitesmoke;
+    font-family: Anton, Sans-Serif, serif;
+}
+
+#upfile-box {
+    border-radius: 6px;
+    border: 1px solid #d3d3d3;
+}
+
+#upfile-drag-box {
+    height: 150px;
+    padding-top: 55px;
+    font-family: Anton, Sans-Serif, serif;
+    font-size: 25px;
+    border-radius: 15px;
+    border: 2px dotted black;
+}
+
+/*
+ * Write
+ */

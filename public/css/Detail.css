@@ -1,0 +1,9 @@
+.comment-count{
+    background-color: #EEEEEE;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
+
+.comment-data div{
+    line-height: 2rem;
+}

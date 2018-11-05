@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateViewersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('viewers', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->string('email')->unique();
-            $table->string('name',20);
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password',60);
-            $table->rememberToken()->comment('');
-            $table->timestamps();
+            $table->unsignedInteger('post_num')->index();
+            $table->string('viewer');
+
+            $table->foreign('post_num')->references('num')->on('posts')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -31,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('viewers');
     }
 }
