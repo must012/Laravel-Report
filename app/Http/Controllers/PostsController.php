@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 
 class PostsController extends Controller
 {
@@ -14,9 +14,10 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //Article 컬렉션을 조회
-         
-        return view('posts.list');
+        //
+        $list = Post::paginate(8);
+
+        return view('posts.list', compact('list'));
     }
 
     /**
@@ -26,63 +27,74 @@ class PostsController extends Controller
      */
     public function create()
     {
-
-        //Article 컬렉션을 만들기 위한 폼을 담은 뷰를 반환
+        //
+        return view('posts.write');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //사용자의 입력한 폼 데이터로 새로운 Atricle 컬렉션을 생성
+        //
+        Post::create([
+            'writer' => $request->get('writer'),
+            'name' => $request->get('writer'),
+            'title' => $request->get('writer'),
+            'content' => $request->get('writer'),
+        ]);
+
+        return redirect('posts');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //인자의 키를 가진 Atticle 모델을 반환
+        //
+        $post = Post::get(1);
+
+        return view('posts.detail', compact('post'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        // 인자의 키를 가진 Article 모델을 수정하기 위한 폼을 담은 뷰를 반환
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //사용자가 입력한 폼데이터를 인자 id의 키를 가진 Article 모델을 수정
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //인자의 키를 가진 Article 모델을 삭제
+        //
     }
 }

@@ -15,10 +15,10 @@ class CreateViewersTable extends Migration
     {
         Schema::create('viewers', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->unsignedInteger('post_num')->index();
+            $table->unsignedInteger('post_id')->index();
             $table->string('viewer');
 
-            $table->foreign('post_num')->references('num')->on('posts')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('post_id')->references('num')->on('posts')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
