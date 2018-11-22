@@ -72,4 +72,17 @@ class RegisterController extends Controller
         ]);
     }
 
+//    회원가입 후 자동 로그인을 위한 함수
+
+    protected function registered(Request $request, $user)
+    {
+
+        Auth::attempt([
+            'id'=>$request->input('email'),
+            'password'=>$request->input('email')
+        ]);
+
+        return redirect(route('posts.index'));
+    }
+
 }

@@ -4,33 +4,31 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    //toolbarcanCollapse = 툴바를 접는 기능
 
-    config.height = 400;
     config.toolbarCanCollapse = true;
 
-
     config.toolbarGroups = [
-        {name: 'clipboard', groups: ['clipboard', 'undo']},
-        {name: 'document', groups: ['mode', 'document', 'doctools']},
-        {name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing']},
-        {name: 'forms', groups: ['forms']},
+        { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+        { name: 'clipboard', groups: [ 'undo', 'clipboard' ] },
+        { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+        { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi', 'paragraph' ] },
+        { name: 'links', groups: [ 'links' ] },
+        { name: 'insert', groups: [ 'insert' ] },
         '/',
-        {name: 'basicstyles', groups: ['basicstyles', 'cleanup']},
-        {name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
-        {name: 'links', groups: ['links']},
-        {name: 'insert', groups: ['insert']},
+        { name: 'forms', groups: [ 'forms' ] },
         '/',
-        {name: 'styles', groups: ['styles']},
-        {name: 'colors', groups: ['colors']},
-        {name: 'tools', groups: ['tools']},
-        {name: 'others', groups: ['others']},
-        {name: 'about', groups: ['about']}
+        { name: 'styles', groups: [ 'styles' ] },
+        { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+        { name: 'colors', groups: [ 'colors' ] },
+        { name: 'tools', groups: [ 'tools' ] },
+        { name: 'others', groups: [ 'others' ] },
+        { name: 'about', groups: [ 'about' ] }
     ];
 
-    config.removeButtons = 'Scayt,Anchor,Link,Unlink,Flash,About';
+    config.removeButtons = 'Cut,Copy,Paste,PasteText,PasteFromWord,Save,NewPage,SelectAll,Scayt,Form,Checkbox,Radio,TextField,ImageButton,Button,Select,Textarea,HiddenField,BidiLtr,BidiRtl,Language,Link,Unlink,Anchor,Flash,PageBreak,Iframe,Maximize,ShowBlocks,Styles';
 
     config.font_names = '맑은 고딕/Malgun Gothic;굴림/Gulim;돋움/Dotum;바탕/Batang;궁서/Gungsuh;' + config.font_names;
 
+    config.enterMode = CKEDITOR.ENTER_BR;
 };
 

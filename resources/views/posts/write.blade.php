@@ -2,17 +2,14 @@
 
 @section('header')
 
-    <script type="text/javascript" src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('js/ckeditor/ckeditor.js') }}"></script>
 
-    <script src="{{ asset('js/dropzone.js') }}"></script>
-
-    <link rel="stylesheet" href="{{ asset('css/dropzone.css') }}">
 @endsection
 
 @if(Session::has('message'))
-<div class="alert alert-info">
-{{ Session::get('message') }}
-</div>
+    <div class="alert alert-info">
+        {{ Session::get('message') }}
+    </div>
 @endif
 
 @section('main')
@@ -45,6 +42,7 @@
                 <input type="hidden" name="name" value="{{ Auth::user()->name }}" readonly>
 
                 <div class="panel-heading d-flex justify-content-between pt-2 pb-2">
+
                     <div class="contents-title col-3 pt-2">
                         <div class="contents-writer">작성자 : {{ Auth::user()->name }} </div>
                     </div>
@@ -56,14 +54,24 @@
                 </div>
 
                 <div class="panel-body">
-                    <div class="col-12 pt-2 form-group">
+                    <div class="col-12 p-3 pb-1 m-0 form-group d-flex">
+                        <input class="form-control col-4 mr-3" type="text" name="book" placeholder="책 제목">
+                        <button class="btn btn-sm write-btn blueBtn" data-toggle="modal" data-target="#bookSearch">검 색</button>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+                    <div class="col-12 pt-2 form-group {{ $errors->has('title')?'has-error':'' }}">
 
                         <input type="text" id="title" class="form-control" name="title" aria-label="제목" placeholder="제목"
-                               required autofocus>
-
+                               value="{{ old('title') }}"
+                               required>
+                        {!! $errors->first('title','<span class="form-error">:message</span>') !!}
                         <hr style="background-color: whitesmoke">
                         <div class="form-group">
-                            <textarea class="form-control" id="contents" name="contents" required></textarea>
+                            <textarea class="form-control" id="contents" name="contents"
+                                      required> {{ old('contents') }}</textarea>
+
                         </div>
                     </div>
                 </div>
@@ -86,14 +94,38 @@
 
 @endsection
 
+@section('modal')
+
+    <div class="modal fade" id="bookSearch" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div></div>
+                    <div class="modal-title">책 검색</div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span class="modal-out" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form-signup" action="http://www.aladin.co.kr/ttb/api/ItemSearch.aspx?ttbkey=ttbtnwo941642001&start=1&MaxResults=10&Cover=Small&Output=JS">
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn blueBtn" type="submit">변경완료</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
 @section('script')
     <script>
         CKEDITOR.replace('contents', {
-            filebrowserImageUploadUrl: "/application/View/upload.php?type=image",
-            extraPlugins: 'uploadimage'
+            filebrowserUploadUrl: "/posts/imgUpload",
+            extraPlugins: 'uploadimage',
+            height: 400
         });
-
-        CKEDITOR.instances.contents.updateElement();
-
     </script>
 @endsection

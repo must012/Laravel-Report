@@ -2,7 +2,9 @@
 
 @section('main')
 
+
     <div class="row">
+
         <div class="subject col-md-10"><h2 class="d-inline-block">Board</h2></div>
 
         @auth
@@ -20,9 +22,9 @@
             @forelse($list as $value)
 
                 <li class="list-group-item d-flex flex-row contents-list">
-
+                    <div class="post-id col-1 pr-0 pt-3 pl-0">{{ $value->id }}.</div>
                     <!--                        제목 부분 div -->
-                    <div class="list-title-wrapper col-md-6 pt-md-2">
+                    <div class="list-title-wrapper col-md-6 pt-md-2 pl-0">
                         <div class="list-tag d-flex">
 
                             <a href="#" class="list-group-item-text item-tag label label-info">태그 부분 </a>
@@ -33,7 +35,7 @@
                     </div>
 
                     <!--                        작성자 및 날짜 div-->
-                    <div class="list-data-wrapper col-md-4 pt-md-2">
+                    <div class="list-data-wrapper col-md-3 pt-md-2">
                         <div class='content-data'>
                             <div class="writer-info"><p class="writer">{{ $value->name }}</p>
                                 <div class="published"> {{ $value->created_at }}
@@ -70,9 +72,24 @@
             @endforelse
         </ul>
         @if($list)
-            <div class="text-center">
-                {!! $list->render() !!}
-            </div>
+            <nav aria-label="pagination" class="pt-1">
+                <ul class="pagination justify-content-center mb-0">
+                    @if($list->currentPage() != 1)
+                        <li class="page-item">
+                            <a class="page-link" href="{{route('posts.index')}}">처음</a>
+                        </li>
+                    @endif
+
+                    {!! $list->render() !!}
+
+                    @if($list->hasMorePages())
+                        <li class="page-item">
+                            <a class="page-link" href="{{ route('posts.index',['page'=>$list->lastPage()]) }}">끝</a>
+                        </li>
+                    @endif
+                </ul>
+            </nav>
+
         @endif
     </div>
 

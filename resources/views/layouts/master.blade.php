@@ -9,6 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!--  bootstrap  -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
@@ -46,6 +47,7 @@
             <div class="p-1 col-md-11 ml-auto mr-auto mt-3 mb-3">
 
                 @guest
+
                     <div class="d-flex col-12 p-0">
                         <button class="btn btn-sm col-6 blueBtn" id="loginBtn"
                                 onclick="location.href='{{ route('login') }}'">로그인
@@ -61,11 +63,12 @@
                                     id="nickName" style="font-weight: normal">{{ Auth::user()->name }} 님</p></div>
                         <div class="col-4 d-flex flex-column">
                             <div class="pb-1" onclick="document.getElementById('logout-form').submit();"><i
-                                        class="fas fa-sign-out-alt"
-                                ></i></div>
+                                        class="fas fa-sign-out-alt"></i></div>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+
                                 @csrf
+
                             </form>
 
                             <div><i class="fas fa-user-cog" data-toggle="modal" data-target="#memberChangeModal"></i>
@@ -80,15 +83,15 @@
             <ul class="nav pl-auto pr-0 ml-auto mr-0 flex-column">
 
                 <li class="nav-item">
-                    <a href="{{ route('posts.index') }}" class="nav-link side-nav side-nav-1">Board</a>
+                    <a href="{{ route('posts.index') }}" class="nav-link side-nav side-nav-1">독후감</a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('posts.index') }}" class="nav-link side-nav side-nav-2">Board2</a>
+                    <a href="{{ route('posts.index') }}" class="nav-link side-nav side-nav-2">중고책 거래</a>
                 </li>
 
                 <ul class="list-group text-center pt-md-2 pb-md-2" id="tools" style="color: white;font-weight: bold">
-                    TOOLS
+                    도구
 
                     <li class="list-group-item tool-item" style="display: none">
                         <a href="{{url('https://www.yjp.ac.kr/portal/main/index_noie.jsp')}}" class="nav-link side-nav"
@@ -134,13 +137,17 @@
         <div class="col-md-2 col-sm-3 mr-4"></div>
 
         <main role="main" class="col-sm-7 col-md-7 pr-md-5 pt-md-4 pb-md-2" id="main">
-
+            @if(session()->has('flash_message'))
+                <div class="alert alert-info" role="alert">{{ session('flash_message') }}</div>
+            @endif
             @yield('main')
 
         </main>
 
     </div>
 </div>
+
+@yield('modal')
 
 <script>
     var $target = $("#tools");
@@ -149,6 +156,10 @@
         var $item = $(".tool-item");
         $item.slideToggle(200);
     });
+
+    $('.alert-info').ready(function () {
+        $('.alert-info').fadeOut(1800);
+    })
 </script>
 
 @yield('script')

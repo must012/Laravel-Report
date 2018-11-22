@@ -140,6 +140,10 @@ h2 {
  * th, td, table
  */
 
+#main{
+    min-height: 90vh;
+}
+
 table {
     box-shadow: 1px 1px 0 1px #f1f3f5;
 }

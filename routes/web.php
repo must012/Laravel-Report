@@ -12,12 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
+    return redirect(route('posts.index'));
 });
 
-Route::get('/home', function(){
-    return view('home');
+Route::get('/home', function () {
+//    return view('home');
+    return redirect(route('posts.index'));
 });
+
+Route::post('/posts/imgUpload', [
+    "as" => "posts.img",
+    "uses" => 'UploadController@imageUpload'
+]);
 
 Route::resource('posts', 'PostsController');
 
