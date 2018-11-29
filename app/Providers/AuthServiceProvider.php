@@ -24,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
 //        $this->registerPolicies();
+//      권한 처리를 위한 부분
 
         Gate::define('update',function ($user, $model){
             return $user->email === $model->writer;

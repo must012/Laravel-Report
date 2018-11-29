@@ -15,6 +15,7 @@ use DOMDocument;
 
 class UploadController extends Controller
 {
+
     public function imageUpload(Request $request)
     {
         if ($request->file('upload')->isValid()) {

@@ -17,8 +17,8 @@
 
         <div class="panel-heading d-flex pt-2 pb-2">
             <div class="contents-title col-md-3 col-sm-5">
-                <div class="contents-writer" title="작성자">{{ $list->name }}</div>
-                <div class="contents-data" title="작성일">{{ $list->created_at }}</div>
+                <div class="contents-writer" title="작성자">{{ $post->name }}</div>
+                <div class="contents-data" title="작성일">{{ $post->created_at }}</div>
             </div>
             <div class="col-md-3 col-lg-3 col-sm-1 empty-flex-box"></div>
 
@@ -27,36 +27,36 @@
                 <div class="d-flex p-0" id="view-count-box" title="조회수">
                     <div class="item-comment-icon p-0"><i class="far fa-eye fa-sm"></i>
                     </div>
-                    <div class="item-comment-count p-0 ml-2">{{ $list->viewers()->where('post_id','=',$list->id)->count() }}</div>
+                    <div class="item-comment-count p-0 ml-2">{{ $post->viewers()->where('post_id','=',$post->id)->count() }}</div>
                 </div>
 
 
                 <div class="d-flex p-0" id="comment-count-box" onclick="location.href = '#comments'" title="댓글수">
                     <div class="item-comment-icon p-0"><i class="far fa-comment-alt fa-sm"></i>
                     </div>
-                    <div class="item-comment-count p-0 ml-2">{{ $list->comments()->count() }}</div>
+                    <div class="item-comment-count p-0 ml-2">{{ $post->comments()->count() }}</div>
                 </div>
 
                 <div class="d-flex p-0" id="recommend-count-box" title="추천수">
                     <div class="item-comment-icon p-0"><i class="far fa-thumbs-up fa-sm"></i>
                     </div>
-                    <div class="item-comment-count p-0 ml-2">{{ $list->comments()->count() }}</div>
+                    <div class="item-comment-count p-0 ml-2">{{ $post->comments()->count() }}</div>
                 </div>
             </div>
             <div class="action col-md-3 col-lg-3 pl-4 pt-2 d-flex flex-row-reverse">
-                @can('update',$list)
+                @can('update',$post)
 
-                    <button class="btn blueBtn" onclick="location.href= '{{ route('posts.edit', $list->id) }}'"><i
+                    <button class="btn blueBtn" onclick="location.href= '{{ route('posts.edit', $post->id) }}'"><i
                                 class="far fa-edit">수정</i>
                     </button>
                 @endcan
 
-                @can('delete',$list)
+                @can('delete',$post)
                     <button class="btn mr-md-1 mr-lg-2 redBtn" onclick="document.getElementById('postDelete').submit();"><i
                                 class="far fa-trash-alt">
                             삭제</i>
                     </button>
-                        <form action="{{ route('posts.destroy',$list->id) }}" method="POST" id="postDelete">
+                        <form action="{{ route('posts.destroy',$post->id) }}" method="POST" id="postDelete">
                             @csrf
                             {{ method_field('DELETE') }}
                         </form>
@@ -67,9 +67,9 @@
         </div>
 
         <div class="panel-body contents-panel-body pb-4">
-            <div class="col-12 pt-2"><h3>{{ $list->title }}</h3>
+            <div class="col-12 pt-2"><h3>{{ $post->title }}</h3>
                 <hr style="background-color: whitesmoke">
-                <div class="contents">{!! $list->content !!}</div>
+                <div class="contents">{!! $post->content !!}</div>
             </div>
         </div>
 
@@ -83,9 +83,9 @@
     <div class="panel panel-default mt-4 mb-sm-3" id="comments">
         <!-- 댓글 갯수 -->
         <ul class="list-group">
-            <li class="list-group-item comment-count border-0">댓글 {{ $list->comments()->count() }}</li>
+            <li class="list-group-item comment-count border-0">댓글 {{ $post->comments()->count() }}</li>
             <!-- 댓글 내용 -->
-            @forelse($list->comments()->get() as $comment)
+            @forelse($post->comments()->get() as $comment)
 
                 <li class="list-group-item comments @if(!$comment->root_writer_name) root-comment @else tree-comment @endif"
                     id="{{ $comment->id }}">
@@ -138,7 +138,7 @@
                 <li class="list-group-item p-1 comment-reply-{{ $comment->id }}" style="display: none">
                     <form action="/comment/update" method="post">
 
-                        <input type="hidden" name="conNum" value="{{ $list->id }}">
+                        <input type="hidden" name="conNum" value="{{ $post->id }}">
                         <input type="hidden" name="rootComment"
                                value="<?= $comment["rootComment"] ?? $comment["num"]; ?>">
                         <input type="hidden" name="parentComment" value="<?= $comment["num"] ?>">
@@ -167,19 +167,19 @@
                 <li class="list-group-item p-1">
                     <form action="/comment/update" method="post">
 
-                        <input type="hidden" name="conNum" value="{{ $list->id }}">
+                        <input type="hidden" name="conNum" value="{{ $post->id }}">
 
                         <div class="writer d-flex justify-content-between p-1">
                             <div class="comment-writer mt-1 ml-2"><?= Auth::user()->name ?></div>
                             <div class="mr-2">
-                                <button class="btn greBtn newComment" type="submit" data-connum="{{ $list->id }}"><i
+                                <button class="btn greBtn newComment" type="submit" data-connum="{{ $post->id }}"><i
                                             class="far fa-edit"> 등록</i>
                                 </button>
                             </div>
                         </div>
 
                         <div class="panel-body mt-1">
-                    <textarea class="form-control" name="comment" id="comment{{ $list->id }}" rows="3"
+                    <textarea class="form-control" name="comment" id="comment{{ $post->id }}" rows="3"
                               placeholder="댓글을 작성해주세요" required></textarea>
                         </div>
 

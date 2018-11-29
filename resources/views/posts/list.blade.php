@@ -5,7 +5,7 @@
 
     <div class="row">
 
-        <div class="subject col-md-10"><h2 class="d-inline-block">Board</h2></div>
+        <div class="subject col-md-10"><h2 class="d-inline-block">독후감</h2></div>
 
         @auth
             <div class="col-2 pl-5">

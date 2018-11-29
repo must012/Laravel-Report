@@ -7,7 +7,7 @@ div {
 }
 
 button {
-    font-family: Anton, Sans-Serif, serif;
+    font-family:'Do Hyeon', 'Anton', Sans-Serif, serif;
 }
 
 body {
@@ -46,7 +46,7 @@ h1 {
 }
 
 h2 {
-    font-family: 'Anton', sans-serif;
+    font-family: 'Do Hyeon', 'Anton', sans-serif;
     margin: 0;
 }
 
@@ -67,6 +67,11 @@ h2 {
 
 .sidebar {
     background-color: #0059ab;
+    font-family: 'Do Hyeon', 'Anton', Sans-Serif, serif;
+}
+
+.sidebar > ul {
+    font-size: 1.3rem;
 }
 
 .side-nav {
@@ -130,6 +135,10 @@ h2 {
     font-size: 1.3rem;
     font-family: 'Anton', sans-serif;
     font-weight: bold;
+}
+
+#oauth{
+    border-bottom: 1px solid #EEEEEE;
 }
 
 /*
@@ -253,8 +262,8 @@ td {
 
 
 #nickName {
-    font-family: 'Anton', sans-serif;
-    font-size: 1.2rem;
+    font-family: 'Do Hyeon', 'Anton', sans-serif;
+    font-size: 1.5rem;
 }
 
 .contents-list:hover {

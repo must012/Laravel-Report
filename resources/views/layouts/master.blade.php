@@ -3,7 +3,7 @@
 <head>
     <!--  google font -->
 
-    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Anton" rel="stylesheet">
 
     <!--  head   -->
     <meta charset="utf-8">
@@ -50,9 +50,10 @@
 
                     <div class="d-flex col-12 p-0">
                         <button class="btn btn-sm col-6 blueBtn" id="loginBtn"
-                                onclick="location.href='{{ route('login') }}'">로그인
+                                onclick="location.href='{{ route('sessions.create') }}'">로그인
                         </button>
-                        <button class="btn btn-sm col-6 whiteBtn" onclick="location.href='{{ route('register') }}'">회원가입
+                        <button class="btn btn-sm col-6 whiteBtn" onclick="location.href='{{ route('users.create') }}'">
+                            회원가입
                         </button>
                     </div>
 
@@ -60,18 +61,13 @@
 
                     <div class="mt-md-3 mb-md-4 row" id="uName" style="color: #FFFFFF">
                         <div class="col-md-6 col-sm-6 align-middle ml-4 pt-md-2 p-sm-0"><p
-                                    id="nickName" style="font-weight: normal">{{ Auth::user()->name }} 님</p></div>
+                                    id="nickName" style="font-weight: normal">{{ Auth::user()->name }}</p></div>
                         <div class="col-4 d-flex flex-column">
-                            <div class="pb-1" onclick="document.getElementById('logout-form').submit();"><i
-                                        class="fas fa-sign-out-alt"></i></div>
+                            <div class="pb-1"><i
+                                        class="fas fa-sign-out-alt"
+                                        onclick="location.href='{{ route('sessions.destroy') }}'"></i></div>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-
-                                @csrf
-
-                            </form>
-
-                            <div><i class="fas fa-user-cog" data-toggle="modal" data-target="#memberChangeModal"></i>
+                            <div><i class="fas fa-user-cog" onclick="location.href= '{{ route('users.edit',auth()->user()) }}'"></i>
                             </div>
                         </div>
 
@@ -158,7 +154,7 @@
     });
 
     $('.alert-info').ready(function () {
-        $('.alert-info').fadeOut(1800);
+        $('.alert-info').fadeOut(2300);
     })
 </script>
 

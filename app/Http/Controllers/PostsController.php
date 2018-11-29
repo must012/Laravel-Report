@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 
@@ -35,43 +36,41 @@ class PostsController extends Controller
     public function create()
     {
         //
-        return view('posts.write');
+        $list = new Post();
+
+        return view('posts.formPartial.write', compact('list'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\PostRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
         //
 
-        $rules = [
-            'title' => ['required'],
-            'writer' => ['required'],
-            'name' => ['required']
-        ];
+        if ($request->hasFile('upFiles')) {
+            $files = $request->file('upFiles');
 
-        $messages = [
-            'title.required' => '제목이 입력되어야 합니다',
-            'writer.required' => '로그인 정보 확인',
-            'name.required' => '로그인 정보 확인'
-        ];
+            foreach ($files as $file) {
+                $filename = date('YmdHis') . "_" . filter_var($file->getClientOriginalName(), FILTER_SANITIZE_URL);
+                $file->move(attachments_path(), $filename);
 
-        $this->validate($request, $rules, $messages);
+
+            }
+        }
 
         $value = array("writer" => $request->writer, "name" => $request->name, "title" => $request->title, "content" => $request->contents);
 
-        $post = Post::create($value);
+        $list = Post::create($value);
 
-
-        if (!$post) {
+        if (!$list) {
             return back()->with('flash_message', '글이 저장되지 않았습니다.')->withInput();
         }
 
-        return redirect(route('posts.show', $post))->with('flash_message', "작성이 완료되었습니다.");
+        return redirect(route('posts.show', $list))->with('flash_message', "작성이 완료되었습니다.");
 
     }
 
@@ -86,9 +85,7 @@ class PostsController extends Controller
     {
         //
 
-        $list = Post::find($post->id);
-
-        return view('posts.detail', compact('list'));
+        return view('posts.detail', compact('post'));
     }
 
     /**
@@ -100,9 +97,11 @@ class PostsController extends Controller
     public function edit(Post $post)
     {
         //
+        $this->authorize('update', $post);
+
         $list = Post::find($post->id);
 
-        return view('posts.edit', compact('list'));
+        return view('posts.formPartial.edit', compact('list'));
     }
 
     /**
@@ -112,15 +111,11 @@ class PostsController extends Controller
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
         //
 
-        $this->authorize('update', $post);
-
-        $obj = Post::findOrFail($post->id);
-
-        $obj->update([
+        $post->update([
             'title' => $request->get('title'),
             'content' => $request->get('contents')
         ]);
@@ -139,15 +134,14 @@ class PostsController extends Controller
         //
         $this->authorize('delete', $post);
 
-        $obj = Post::findOrFail($post->id);
 
-        foreach ($obj->comments()->get() as $comment) {
+        foreach ($post->comments()->get() as $comment) {
             $comment->delete();
         }
 
-        $obj->delete();
+        $post->delete();
 
-        return redirect(route('posts.index'))->with('flash_message', $obj->id . '번 포스트가 삭제되었습니다');
+        return redirect(route('posts.index'))->with('flash_message', $post->id . '번 포스트가 삭제되었습니다');
     }
 
 
