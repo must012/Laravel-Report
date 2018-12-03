@@ -79,7 +79,7 @@
 @section('script')
     <script>
         CKEDITOR.replace('contents', {
-            filebrowserUploadUrl: "/posts/imgUpload",
+            filebrowserUploadUrl: "/posts/imgUpload?type=image",
             extraPlugins: 'uploadimage',
             height: 400
         });

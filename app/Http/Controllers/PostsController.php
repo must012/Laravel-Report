@@ -51,20 +51,32 @@ class PostsController extends Controller
     {
         //
 
+        $value = array("writer" => $request->writer, "name" => $request->name, "title" => $request->title, "content" => $request->contents);
+
+        $list = Post::create($value);
+
+
         if ($request->hasFile('upFiles')) {
             $files = $request->file('upFiles');
+            $meta = Post::find($list->id);
+
 
             foreach ($files as $file) {
                 $filename = date('YmdHis') . "_" . filter_var($file->getClientOriginalName(), FILTER_SANITIZE_URL);
+                \Log::debug("FileName = ".$filename);
+
+                $meta->attachments()->create([
+                    'filename' => $filename,
+                    'bytes' => $file->getSize(),
+                    'mime' => $file->getClientMimeType()
+                ]);
+
+
                 $file->move(attachments_path(), $filename);
 
 
             }
         }
-
-        $value = array("writer" => $request->writer, "name" => $request->name, "title" => $request->title, "content" => $request->contents);
-
-        $list = Post::create($value);
 
         if (!$list) {
             return back()->with('flash_message', '글이 저장되지 않았습니다.')->withInput();

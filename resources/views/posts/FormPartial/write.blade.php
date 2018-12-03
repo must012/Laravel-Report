@@ -49,7 +49,7 @@
                 </div>
                 <div class="col-11 p-0">
 
-                    <input type="file" class="btn col-12 custom-file-input border border-primary" id="upFile"
+                    <input type="file" class="btn col-12 custom-file-input border border-primary" id="upFiles"
                            name="upFiles[]" multiple>
                     {!! $errors->first('upFiles.0','<span class="form-error">:message</span>') !!}
 
