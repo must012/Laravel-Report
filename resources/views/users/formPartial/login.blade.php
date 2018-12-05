@@ -10,7 +10,11 @@
         </div>
     </div>
 
-    <hr/>
+    <div class="d-flex">
+        <div class="line ml-4" style="height: 1px"> </div>
+        <div class="line-text mr-2 ml-2 text-secondary">또는</div>
+        <div class="line mr-4" style="height: 1px"> </div>
+    </div>
 
     <div class="card-body">
         <form method="POST" action="{{ route('sessions.store') }}">

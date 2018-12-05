@@ -30,8 +30,8 @@ class PostRequest extends FormRequest
             'title' => ['required'],
             'writer' => ['required'],
             'name' => ['required','max:20'],
-            'upFiles' => ['array'],
-            'upFiles.*' => ['mimes:jpg,png,zip,tar'],
+//            'upFiles' => ['array'],
+//            'upFiles.*' => ['mimes:jpg,png,zip,tar'],
         ];
 
     }

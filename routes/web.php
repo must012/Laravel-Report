@@ -30,7 +30,9 @@ Route::post('/posts/imgUpload', [
     "uses" => 'UploadController@imageUpload'
 ]);
 
-// posts
+Route::resource('attachments','AttachmentsController',[
+    'only'=>['store','destroy','show']
+]);
 
 Route::resource('posts', 'PostsController');
 

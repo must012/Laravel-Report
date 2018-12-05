@@ -7,19 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Attachment extends Model
 {
     //
-    protected $fillable = ['filename','bytes','mime'];
+    protected $fillable = ['filename','bytes','mime','origin_name'];
 
     public function post()
     {
         return $this->belongsTo(Post::class);
     }
 
-    public function getBytesPost($value)
+    public function getBytesAttribute($value)
     {
         return format_filesize($value);
     }
 
-    public function getUrlPost($value)
+    public function getUrlAttribute()
     {
         return url('files/'.$this->filename);
     }

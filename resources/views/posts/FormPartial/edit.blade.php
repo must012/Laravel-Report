@@ -1,4 +1,5 @@
 @extends('posts.write')
+
 @section('form')
     <form class="mb-md-5 mb-sm-4" action="{{ route('posts.update',$list) }}" enctype="multipart/form-data"
           method="post">
@@ -43,21 +44,22 @@
                 </div>
             </div>
         </div>
-
-        <div class="panel-footer col-11 m-auto">
-            <div id="upfile-box" class="col-12 input-group p-0">
-                <div class="input-group-append file-text pt-2 pl-1 pr-1">
-                    <span class="input-group-text">업로드</span>
-                </div>
-                <div class="col-11 p-0">
-
-                    <input type="file" class="btn col-12 custom-file-input border border-primary" id="upFile"
-                           name="upFiles[]" multiple>
-                    {!! $errors->first('upFiles.0','<span class="form-error">:message</span>') !!}
-
-                </div>
-            </div>
-
-        </div>
     </form>
+    <div class="panel-footer col-11 p-0 m-auto">
+        <div class="form-group">
+            <label for="my-dropzone">
+                <small class="text-muted">
+                    <i class="fa fa-chevron-down"></i>
+                </small>
+
+                <small class="text-muted" style="display: none;">
+                    <i class="fa fa-chevron-up"></i>
+                </small>
+            </label>
+
+            <div id="my-dropzone" class="dropzone"></div>
+        </div>
+
+    </div>
+
 @endsection

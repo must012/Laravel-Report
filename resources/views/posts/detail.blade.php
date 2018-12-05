@@ -73,8 +73,7 @@
             </div>
         </div>
 
-
-        {{-- 나중에 파일 구현 --}}
+@include('posts.AttachmentsPartial.partial',['attachments'=>$post->attachments])
 
 
     </div>

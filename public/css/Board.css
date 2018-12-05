@@ -137,10 +137,12 @@ h2 {
     font-weight: bold;
 }
 
-#oauth{
-    border-bottom: 1px solid #EEEEEE;
-}
 
+.line{
+    flex: 1;
+    margin-top: 0.6rem;
+    background-color: #DDDDDD;
+}
 /*
  * sidebar
  */
