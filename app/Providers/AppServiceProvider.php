@@ -13,7 +13,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        view()->composer('*', function ($view){
+            $currentUser = auth()->user();
+            $currentRouteName = \Route::currentRouteName();
+            $currentLocale = app()->getLocale();
+
+            $view->with(compact('allTags', 'currentUser', 'currentRouteName', 'currentLocale', 'currentUrl'));
+        });
+
     }
 
     /**

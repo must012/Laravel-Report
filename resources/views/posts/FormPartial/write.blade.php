@@ -21,8 +21,7 @@
 
         <div class="panel-body">
             <div class="col-12 p-3 pb-1 m-0 form-group d-flex">
-                <input class="form-control col-4 mr-3" type="text" name="book" placeholder="책 제목">
-                <button class="btn btn-sm write-btn blueBtn" data-toggle="modal" data-target="#bookSearch">검 색
+                <button class="btn btn-sm write-btn blueBtn" data-toggle="modal" data-target="#bookSearch">책 검 색
                 </button>
             </div>
         </div>

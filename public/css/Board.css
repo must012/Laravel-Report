@@ -334,6 +334,13 @@ td {
     line-height: 2rem;
 }
 
+.content-comment{
+
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #EEEEEE;
+}
+
 /*
  * Detail
  */

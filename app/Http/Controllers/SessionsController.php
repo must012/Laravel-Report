@@ -11,11 +11,6 @@ class SessionsController extends Controller
         $this->middleware('guest',['except'=>'destroy']);
     }
 
-    public function returnBack($message)
-    {
-        return back()->withInput()->with('flash_message', $message);
-    }
-
     public function create(){
         return view('users.formPartial.login');
     }
@@ -45,5 +40,10 @@ class SessionsController extends Controller
         auth()->logout();
         
         return $this->returnBack('로그아웃 되었습니다.');
+    }
+
+    public function returnBack($message)
+    {
+        return back()->withInput()->with('flash_message', $message);
     }
 }

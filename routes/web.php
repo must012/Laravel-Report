@@ -30,11 +30,28 @@ Route::post('/posts/imgUpload', [
     "uses" => 'UploadController@imageUpload'
 ]);
 
+// 포스트 라우팅
+Route::resource('posts', 'PostsController');
+
+// 첨부파일 라우팅
 Route::resource('attachments','AttachmentsController',[
     'only'=>['store','destroy','show']
 ]);
 
-Route::resource('posts', 'PostsController');
+// 댓글 라우팅
+Route::resource('comments','CommentsController',[
+    'only' => ['update','destroy']
+]);
+
+Route::resource('posts.comments','CommentsController',[
+    'only' => ['store']
+]);
+
+// 모달 라우팅
+Route::get('books/{bookname}',[
+    'as' => 'books.get',
+    'uses' => 'BooksController@get'
+]);
 
 // 사용자 가입
 Route::get('auth/register',[

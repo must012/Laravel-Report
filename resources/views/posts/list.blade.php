@@ -48,17 +48,17 @@
 
                     <div class="col-md-2 p-0 mt-2 d-flex justify-content-around">
                         <div class="d-flex p-0" id="comment-count-box"
-                             onclick="location.href = '{{ route('posts.show', $value->id) }}#comments'">
+                             onclick="location.href = '{{ route('posts.show', $value->id) }}#comments-head'">
                             <div class="item-comment-icon p-0"><i class="far fa-comment-alt fa-sm"></i>
                             </div>
                             <div class="item-comment-count p-0 ml-2">{{ $value->comments()->count() }}</div>
                         </div>
 
-                        <div class="d-flex p-0" id="recommend-count-box">
-                            <div class="item-comment-icon p-0"><i class="far fa-thumbs-up fa-sm"></i>
-                            </div>
-                            <div class="item-comment-count p-0 ml-2">{{ $value->likes()->count() }}</div>
-                        </div>
+                        {{--<div class="d-flex p-0" id="recommend-count-box">--}}
+                            {{--<div class="item-comment-icon p-0"><i class="far fa-thumbs-up fa-sm"></i>--}}
+                            {{--</div>--}}
+                            {{--<div class="item-comment-count p-0 ml-2">{{ $value->likes()->count() }}</div>--}}
+                        {{--</div>--}}
                     </div>
 
                 </li>

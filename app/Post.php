@@ -13,8 +13,9 @@ class Post extends Model
         return $this->hasMany(Viewer::class);
     }
 
-    public function comments(){
-        return $this->hasMany(Comment::class);
+    public function comments()
+    {
+        return $this->morphMany(Comment::class,'commentable');
     }
 
     public function likes(){
@@ -24,5 +25,10 @@ class Post extends Model
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

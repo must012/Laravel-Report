@@ -32,4 +32,8 @@ class User extends Authenticatable
         'activated'=>'boolean',
     ];
 
+    public function Comments()
+    {
+        $this->hasMany(Comment::class);
+    }
 }

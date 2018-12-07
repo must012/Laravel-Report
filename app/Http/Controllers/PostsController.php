@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Attachment;
 use App\Http\Requests\PostRequest;
 use App\Post;
-use Illuminate\Http\Request;
-use function PHPSTORM_META\type;
 
 
 class PostsController extends Controller
@@ -24,7 +22,6 @@ class PostsController extends Controller
 
     public function index()
     {
-        //
         $list = Post::orderBy('id', 'desc')->paginate(10);
 
         return view('posts.list', compact('list'));
@@ -35,9 +32,9 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
-        //
         $list = new Post();
 
         return view('posts.formPartial.write', compact('list'));
@@ -63,10 +60,6 @@ class PostsController extends Controller
             return back()->with('flash_message', '글이 저장되지 않았습니다.')->withInput();
         }
 
-        $types = gettype($request->upFiles);
-
-        \Log::debug(sizeof($request->upFiles));
-
         if($request->has('upFiles')){
             foreach ($request->upFiles as $fid){
                 $attach = Attachment::find($fid);
@@ -75,6 +68,8 @@ class PostsController extends Controller
             }
         }
 
+        event(new \App\Events\PostsEvent($list));
+        event(new \App\Events\ModelChanged(['posts']));
 
         return redirect()->route('posts.show', $list)->with('flash_message', "작성이 완료되었습니다.");
 
@@ -89,9 +84,9 @@ class PostsController extends Controller
 
     public function show(Post $post)
     {
-        //
+        $comments = $post->comments()->with('replies')->withTrashed()->whereNull('parent_id')->oldest()->get();
 
-        return view('posts.detail', compact('post'));
+        return view('posts.detail', compact('post','comments'));
     }
 
     /**
@@ -100,9 +95,9 @@ class PostsController extends Controller
      * @param  \App\Post $post
      * @return \Illuminate\Http\Response
      */
+
     public function edit(Post $post)
     {
-        //
         $this->authorize('update', $post);
 
         $list = Post::find($post->id);
@@ -119,8 +114,6 @@ class PostsController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        //
-
         $post->update([
             'title' => $request->get('title'),
             'content' => $request->get('contents')
@@ -137,9 +130,7 @@ class PostsController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
         $this->authorize('delete', $post);
-
 
         foreach ($post->comments()->get() as $comment) {
             $comment->delete();

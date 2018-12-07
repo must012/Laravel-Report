@@ -34,6 +34,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->email === $model->writer;
         });
 
+        Gate::define('comment_update',function ($user, $model){
+            return $user->id === $model->user_id;
+        });
+
         //
     }
 }
