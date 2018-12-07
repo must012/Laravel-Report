@@ -5,13 +5,13 @@
         <div class="comment-head mb-2">
             <div class="media comment-body p-0 col-12 d-flex justify-content-between" data-id="{{ $comment->id }}"
                  id="comment_{{ $comment->id }}">
-                <div class="d-flex col-4">
-                    <div class="writer p-0 mr-2 col-6">
+                <div class="d-flex col-5">
+                    <div class="writer p-0 mr-2 col-4 pt-2">
                         {{ $comment->user->name }}
                     </div>
-                    <div class="comment_date col-6 p-0">
+                    <div class="comment_date col-8 p-0">
                         <small>
-                            {{ $comment->created_at->diffForHumans() }}
+                            작성 : {{ $comment->created_at }} <br>수정 : {{ $comment->updated_at->diffForHumans() }}
                         </small>
                     </div>
                 </div>
@@ -56,53 +56,50 @@
             'isTrashed' => $reply->trashed(),
             ])
 
-            @empty
+        @empty
         @endforelse
 
     </li>
 @else
     <li class="list-group-item comments  {{ $isReply?'pl-4':'pl-2' }}" id="{{ $comment->id }}">
 
-        <div class="comment-head mb-2" id="comment_{{ $comment->id }}">
-            <div class="media comment-body p-0 col-12 d-flex justify-content-between" data-id="{{ $comment->id }}">
-                <div class="d-flex col-4">
-                    <div class="writer p-0 mr-2 col-6">
+        <div class="comment-head mb-2">
+            <div class="media comment-body p-0 col-12 d-flex justify-content-between" data-id="{{ $comment->id }}"
+                 id="comment_{{ $comment->id }}">
+                <div class="d-flex col-5">
+                    <div class="writer p-0 mr-2 col-4 pt-2">
                         {{ $comment->user->name }}
                     </div>
-                    <div>
-                        child = {{ $hasChild }}
-                    </div>
-                    <div class="comment_date col-6 p-0">
+                    <div class="comment_date col-8 p-0">
                         <small>
-                            {{ $comment->created_at->diffForHumans() }}
+                            작성 : {{ $comment->created_at }} <br>수정 : {{ $comment->updated_at->diffForHumans() }}
                         </small>
                     </div>
                 </div>
-                    <div class="comment-action col-5 col-sm-6 d-flex flex-row-reverse">
-                        @can('comment_update',$comment)
-                            <button class="btn redBtn delete-comment"
-                                    title="댓글삭제">
-                                <i class="far fa-trash-alt fa-sm"></i>
-                            </button>
-                            <button class="btn blueBtn edit-comment" style="width: 38px;"
-                                    title="수정하기" id="{{ $comment->id }}"><i
-                                        class="fas fa-edit fa-sm"></i>
-                            </button>
-                        @endcan
-                        @if($currentUser)
-                            <button class="btn yellowBtn reply-comment"
-                                    title="대댓글작성" id="{{ $comment->id }}">
-                                <i class="fas fa-reply fa-sm"></i>
-                            </button>
-                        @endif
-                    </div>
+                <div class="comment-action col-5 col-sm-6 d-flex flex-row-reverse">
+                    @can('comment_update',$comment)
+                        <button class="btn redBtn delete-comment"
+                                title="댓글삭제">
+                            <i class="far fa-trash-alt fa-sm"></i>
+                        </button>
+                        <button class="btn blueBtn edit-comment" style="width: 38px;"
+                                title="수정하기" id="{{ $comment->id }}"><i
+                                    class="fas fa-edit fa-sm"></i>
+                        </button>
+                    @endcan
+                    @if($currentUser)
+                        <button class="btn yellowBtn reply-comment"
+                                title="대댓글작성" id="{{ $comment->id }}">
+                            <i class="fas fa-reply fa-sm"></i>
+                        </button>
+                    @endif
+                </div>
 
             </div>
             <div class="content-comment">
                 {!! $comment->content !!}
             </div>
-
-
+        </div>
 
 
         @if($currentUser)

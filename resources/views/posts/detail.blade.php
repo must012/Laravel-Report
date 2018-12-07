@@ -1,4 +1,10 @@
 @extends('layouts.master')
+@php
+    $liked = false;
+
+    if($currentUser){
+    $liked = $post->likes->contains('user_id',$currentUser->id)?true:false; }
+@endphp
 
 @section('main')
     <div class="row">
@@ -22,14 +28,12 @@
             </div>
             <div class="col-md-3 col-lg-3 col-sm-1 empty-flex-box"></div>
 
-
-            <div class="col-md-2 col-lg-3 p-0 mt-2 d-flex justify-content-around">
+            <div class="col-md-2 col-lg-3 p-0 mt-2 d-flex justify-content-around" id="post_box" data-id="{{ $post->id }}">
                 <div class="d-flex p-0" id="view-count-box" title="조회수">
                     <div class="item-comment-icon p-0"><i class="far fa-eye fa-sm"></i>
                     </div>
                     <div class="item-comment-count p-0 ml-2">{{ $post->viewers()->where('post_id','=',$post->id)->count() }}</div>
                 </div>
-
 
                 <div class="d-flex p-0" id="comment-count-box" onclick="location.href = '#comments'" title="댓글수">
                     <div class="item-comment-icon p-0"><i class="far fa-comment-alt fa-sm"></i>
@@ -37,10 +41,10 @@
                     <div class="item-comment-count p-0 ml-2">{{ $post->comments()->count() }}</div>
                 </div>
 
-                <div class="d-flex p-0" id="recommend-count-box" title="추천수">
-                    <div class="item-comment-icon p-0"><i class="far fa-thumbs-up fa-sm"></i>
+                <div class="d-flex p-0" id="recommend-count-box" title="Liked!">
+                    <div class="item-comment-icon p-0" id="recommend-trigger"><i class="{{ ($liked)?'fas':'far' }} fa-thumbs-up fa-sm" data-like="{{ $liked }}"></i>
                     </div>
-                    <div class="item-comment-count p-0 ml-2">{{ $post->comments()->count() }}</div>
+                    <div class="item-comment-count p-0 ml-2" id="recommend-count">{{ $post->like_count }}</div>
                 </div>
             </div>
             <div class="action col-md-3 col-lg-3 pl-4 pt-2 d-flex flex-row-reverse">
@@ -76,10 +80,8 @@
 
         @include('posts.AttachmentsPartial.partial',['attachments'=>$post->attachments])
 
-
     </div>
 
-    <!-- 댓글 부분 -->
     <div class="panel panel-default mt-4 mb-sm-3" id="comments-head">
         @include('posts.comments.index')
     </div>
@@ -87,6 +89,8 @@
 
 @section('script')
     <script>
+        @parent
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 
         $(".file-scroll").click(function (e) {
             const $fileTarget = $(".file");
@@ -97,6 +101,23 @@
             $angleTarget.toggleClass("fa-angle-up");
             $angleTarget.toggleClass("fa-angle-down");
         });
+
+        $('#recommend-trigger').on('click', function (e) {
+            var self = $(this),
+                commentId = self.closest('#post_box').data('id'),
+                box = $('#recommend-count-box');
+
+            $.ajax({
+                type: 'POST',
+                url: '/posts/' + commentId + '/votes',
+                data: {
+                    like: self.data('like')
+                },
+                success: function(){
+                    box.find('#recommend-count').html(data.value).fadeIn();
+                }
+            })
+        })
 
     </script>
 

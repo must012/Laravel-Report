@@ -141,4 +141,9 @@ class PostsController extends Controller
         return redirect(route('posts.index'))->with('flash_message', $post->id . '번 포스트가 삭제되었습니다');
     }
 
+    public function like()
+    {
+        return __METHOD__;
+    }
+
 }

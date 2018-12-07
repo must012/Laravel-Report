@@ -42,7 +42,7 @@
     <div class="row">
         <nav class="sidebar col-sm-3 col-md-2 d-none d-sm-block pt-4 align-middle">
             <div class="pb-2 text-center">
-                <h2><a class="brand" href="{{ route('posts.index') }}">PHP REPORT</a></h2></div>
+                <h2><a class="brand" href="{{ route('posts.index') }}">영진 도서관</a></h2></div>
 
             <div class="p-1 col-md-11 ml-auto mr-auto mt-3 mb-3">
 

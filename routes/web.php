@@ -25,9 +25,14 @@ Route::get('/home', function () {
 
 // posts 이미지 업로드
 
-Route::post('/posts/imgUpload', [
+Route::post('posts/imgUpload', [
     "as" => "posts.img",
     "uses" => 'UploadController@imageUpload'
+]);
+
+Route::post('posts/{post}/likes',[
+    'as' => 'posts.like',
+    'uses' => 'PostsController@like'
 ]);
 
 // 포스트 라우팅
