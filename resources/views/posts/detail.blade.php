@@ -1,12 +1,23 @@
 @extends('layouts.master')
 @php
-    $liked = false;
+    $liked = 0;
+    $idCheck = $post->likes->contains('user_id',$currentUser->id);
 
-    if($currentUser){
-    $liked = $post->likes->contains('user_id',$currentUser->id)?true:false; }
+    if($currentUser) {
+        if($idCheck){
+        $liked = $post->likes[0]{'liked'};
+        }else{
+        $liked = 0;
+        }
+    }else{
+        $liked = "stranger";
+    }
+
+
 @endphp
 
 @section('main')
+
     <div class="row">
         <div class="subject col-md-10 col-sm-8 pt-sm-3"><h2>Detail</h2></div>
 
@@ -14,7 +25,6 @@
             <button class="btn greBtn" onclick="location.href= '{{ route('posts.index') }}'"><i class="fas fa-list">
                     목록</i></button>
         </div>
-
     </div>
 
     <hr>
@@ -28,7 +38,8 @@
             </div>
             <div class="col-md-3 col-lg-3 col-sm-1 empty-flex-box"></div>
 
-            <div class="col-md-2 col-lg-3 p-0 mt-2 d-flex justify-content-around" id="post_box" data-id="{{ $post->id }}">
+            <div class="col-md-2 col-lg-3 p-0 mt-2 d-flex justify-content-around" id="post_box"
+                 data-id="{{ $post->id }}">
                 <div class="d-flex p-0" id="view-count-box" title="조회수">
                     <div class="item-comment-icon p-0"><i class="far fa-eye fa-sm"></i>
                     </div>
@@ -42,7 +53,8 @@
                 </div>
 
                 <div class="d-flex p-0" id="recommend-count-box" title="Liked!">
-                    <div class="item-comment-icon p-0" id="recommend-trigger"><i class="{{ ($liked)?'fas':'far' }} fa-thumbs-up fa-sm" data-like="{{ $liked }}"></i>
+                    <div class="item-comment-icon p-0" id="recommend-trigger" data-like="{{ $liked }}"><i
+                                class="{{ ($liked === 1)?'fas':'far' }} fa-thumbs-up fa-sm"></i>
                     </div>
                     <div class="item-comment-count p-0 ml-2" id="recommend-count">{{ $post->like_count }}</div>
                 </div>
@@ -85,6 +97,7 @@
     <div class="panel panel-default mt-4 mb-sm-3" id="comments-head">
         @include('posts.comments.index')
     </div>
+
 @endsection
 
 @section('script')
@@ -105,16 +118,31 @@
         $('#recommend-trigger').on('click', function (e) {
             var self = $(this),
                 commentId = self.closest('#post_box').data('id'),
-                box = $('#recommend-count-box');
+                box = $('#recommend-count-box'),
+                selfi = self.find('i'),
+                selfdata = self.data('like');
+
+                alert(selfdata);
 
             $.ajax({
                 type: 'POST',
-                url: '/posts/' + commentId + '/votes',
+                url: '/posts/' + commentId + '/likes',
                 data: {
                     like: self.data('like')
                 },
-                success: function(){
+                success: function (data) {
+                    if (selfdata === 1) {
+                        selfi.attr('class', 'far fa-thumbs-up fa-sm');
+                        self.data('like', 0);
+                    }
+                    else {
+                        selfi.attr('class', 'fas fa-thumbs-up fa-sm');
+                        self.data('like', 1);
+                    }
                     box.find('#recommend-count').html(data.value).fadeIn();
+                },
+                error: function (e) {
+                    alert('응답 실패')
                 }
             })
         })

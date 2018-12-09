@@ -11,11 +11,6 @@ class CacheHandler
 
     public function handle(ModelChanged $event)
     {
-        if(! taggable()){
-            return \Cache::flush();
 
-        }
-
-        return \Cache::tags($event->cacheTags)->flush();
     }
 }

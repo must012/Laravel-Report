@@ -17,6 +17,7 @@
                 </div>
                 <div class="comment-action col-5 col-sm-6 d-flex flex-row-reverse">
                     @can('comment_update',$comment)
+                        @if(!$isTrashed)
                         <button class="btn redBtn delete-comment"
                                 title="댓글삭제">
                             <i class="far fa-trash-alt fa-sm"></i>
@@ -25,6 +26,7 @@
                                 title="수정하기" id="{{ $comment->id }}"><i
                                     class="fas fa-edit fa-sm"></i>
                         </button>
+                        @endif
                     @endcan
                     @if($currentUser)
                         <button class="btn yellowBtn reply-comment"
@@ -78,6 +80,7 @@
                 </div>
                 <div class="comment-action col-5 col-sm-6 d-flex flex-row-reverse">
                     @can('comment_update',$comment)
+
                         <button class="btn redBtn delete-comment"
                                 title="댓글삭제">
                             <i class="far fa-trash-alt fa-sm"></i>
@@ -86,6 +89,7 @@
                                 title="수정하기" id="{{ $comment->id }}"><i
                                     class="fas fa-edit fa-sm"></i>
                         </button>
+
                     @endcan
                     @if($currentUser)
                         <button class="btn yellowBtn reply-comment"

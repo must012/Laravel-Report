@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Attachment;
 use App\Http\Requests\PostRequest;
+use Illuminate\Http\Request;
 use App\Post;
 
 
@@ -54,14 +55,14 @@ class PostsController extends Controller
 
         $list = Post::create($value);
 
-        \Log::debug("List ID : ".$list->id);
+        \Log::debug("List ID : " . $list->id);
 
         if (!$list) {
             return back()->with('flash_message', '글이 저장되지 않았습니다.')->withInput();
         }
 
-        if($request->has('upFiles')){
-            foreach ($request->upFiles as $fid){
+        if ($request->has('upFiles')) {
+            foreach ($request->upFiles as $fid) {
                 $attach = Attachment::find($fid);
                 $attach->post()->associate($list);
                 $attach->save();
@@ -86,7 +87,7 @@ class PostsController extends Controller
     {
         $comments = $post->comments()->with('replies')->withTrashed()->whereNull('parent_id')->oldest()->get();
 
-        return view('posts.detail', compact('post','comments'));
+        return view('posts.detail', compact('post', 'comments'));
     }
 
     /**
@@ -141,9 +142,41 @@ class PostsController extends Controller
         return redirect(route('posts.index'))->with('flash_message', $post->id . '번 포스트가 삭제되었습니다');
     }
 
-    public function like()
+    public function like(Request $request, Post $post)
     {
-        return __METHOD__;
+        $check = $request->input('like');
+        \Log::info('check = '.$check);
+        \Log::info('userid = '.$request->user()->id);
+        $idCheck = $post->likes()->whereUserId($request->user()->id)->exists();
+
+
+        if (!$idCheck)
+            $post->likes()->create([
+                'user_id' => $request->user()->id,
+                'liked' => null
+            ]);
+
+        if ($check == 1) {
+            \Log::info('in dislike');
+            \Log::info(auth()->user()->id);
+            $post->likes()->whereUserId($request->user()->id)->update([
+                'liked' => 0,
+                'liked_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            ]);
+        } else {
+            \Log::info('in like');
+            \Log::info(auth()->user()->id);
+            $post->likes()->whereUserId($request->user()->id)->update([
+                'liked' => 1,
+                'liked_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            ]);
+        }
+
+        $check = !$check;
+
+        return response()->json([
+            'value' => $post->likes()->where('liked',1)->count()
+        ]);
     }
 
 }

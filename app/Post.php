@@ -40,7 +40,7 @@ class Post extends Model
 
     public function getLikeCountAttribute()
     {
-        return (int) $this->likes()->sum('liked');
+        return (int) $this->likes()->where('liked','=',1)->sum('liked');
     }
     
 }
