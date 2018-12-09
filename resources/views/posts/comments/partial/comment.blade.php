@@ -18,14 +18,14 @@
                 <div class="comment-action col-5 col-sm-6 d-flex flex-row-reverse">
                     @can('comment_update',$comment)
                         @if(!$isTrashed)
-                        <button class="btn redBtn delete-comment"
-                                title="댓글삭제">
-                            <i class="far fa-trash-alt fa-sm"></i>
-                        </button>
-                        <button class="btn blueBtn edit-comment" style="width: 38px;"
-                                title="수정하기" id="{{ $comment->id }}"><i
-                                    class="fas fa-edit fa-sm"></i>
-                        </button>
+                            <button class="btn redBtn delete-comment"
+                                    title="댓글삭제">
+                                <i class="far fa-trash-alt fa-sm"></i>
+                            </button>
+                            <button class="btn blueBtn edit-comment" style="width: 38px;"
+                                    title="수정하기" id="{{ $comment->id }}"><i
+                                        class="fas fa-edit fa-sm"></i>
+                            </button>
                         @endif
                     @endcan
                     @if($currentUser)
@@ -42,25 +42,25 @@
                 삭제된 덧글 입니다
             </div>
 
-        @if($currentUser)
-            @include('posts.comments.partial.create',['parentId' => $comment->id ])
-        @endif
+            @if($currentUser)
+                @include('posts.comments.partial.create',['parentId' => $comment->id ])
+            @endif
 
-        @can('comment_update',$comment)
-            @include('posts.comments.partial.edit')
-        @endcan
+            @can('comment_update',$comment)
+                @include('posts.comments.partial.edit')
+            @endcan
 
-        @forelse ($comment->replies as $reply)
-            @include('posts.comments.partial.comment',[
-            'comment'=> $reply,
-            'isReply'=> true,
-            'hasChild' => $reply->replies->count(),
-            'isTrashed' => $reply->trashed(),
-            ])
+            @forelse ($comment->replies as $reply)
+                @include('posts.comments.partial.comment',[
+                'comment'=> $reply,
+                'isReply'=> true,
+                'hasChild' => $reply->replies->count(),
+                'isTrashed' => $reply->trashed(),
+                ])
 
-        @empty
-        @endforelse
-
+            @empty
+            @endforelse
+        </div>
     </li>
 @else
     <li class="list-group-item comments  {{ $isReply?'pl-4':'pl-2' }}" id="{{ $comment->id }}">
@@ -71,6 +71,9 @@
                 <div class="d-flex col-5">
                     <div class="writer p-0 mr-2 col-4 pt-2">
                         {{ $comment->user->name }}
+                    </div>
+                    <div>
+                        child = {{ $hasChild }}
                     </div>
                     <div class="comment_date col-8 p-0">
                         <small>

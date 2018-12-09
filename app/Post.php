@@ -42,5 +42,10 @@ class Post extends Model
     {
         return (int) $this->likes()->where('liked','=',1)->sum('liked');
     }
+
+    public function getCommentCountAttribute()
+    {
+        return (int) $this->comments->count();
+    }
     
 }

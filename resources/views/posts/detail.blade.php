@@ -43,7 +43,7 @@
                 <div class="d-flex p-0" id="view-count-box" title="조회수">
                     <div class="item-comment-icon p-0"><i class="far fa-eye fa-sm"></i>
                     </div>
-                    <div class="item-comment-count p-0 ml-2">{{ $post->viewers()->where('post_id','=',$post->id)->count() }}</div>
+                    <div class="item-comment-count p-0 ml-2">{{ $post->viewers()->count() }}</div>
                 </div>
 
                 <div class="d-flex p-0" id="comment-count-box" onclick="location.href = '#comments'" title="댓글수">
@@ -52,7 +52,7 @@
                     <div class="item-comment-count p-0 ml-2">{{ $post->comments()->count() }}</div>
                 </div>
 
-                <div class="d-flex p-0" id="recommend-count-box" title="Liked!">
+                <div class="d-flex p-0" id="recommend-count-box" title="{{ ($liked === 1)?'Dislike!':'Like!' }}">
                     <div class="item-comment-icon p-0" id="recommend-trigger" data-like="{{ $liked }}"><i
                                 class="{{ ($liked === 1)?'fas':'far' }} fa-thumbs-up fa-sm"></i>
                     </div>
@@ -122,8 +122,6 @@
                 selfi = self.find('i'),
                 selfdata = self.data('like');
 
-                alert(selfdata);
-
             $.ajax({
                 type: 'POST',
                 url: '/posts/' + commentId + '/likes',
@@ -134,10 +132,12 @@
                     if (selfdata === 1) {
                         selfi.attr('class', 'far fa-thumbs-up fa-sm');
                         self.data('like', 0);
+                        box.attr('title', 'Like!');
                     }
                     else {
                         selfi.attr('class', 'fas fa-thumbs-up fa-sm');
                         self.data('like', 1);
+                        box.attr('title', 'Dislike!');
                     }
                     box.find('#recommend-count').html(data.value).fadeIn();
                 },

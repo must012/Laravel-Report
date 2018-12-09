@@ -26,3 +26,31 @@ function format_filesize($bytes)
 
     return round($bytes, 2) . $suffix[$step];
 }
+
+function link_for_sort($column, $text, $params = [])
+{
+    $direction = request()->input('order');
+    $reverse = ($direction == 'asc')?'desc':'asc';
+
+    if(request()->input('sort') == $column){
+        $text = sprintf("%s %s",
+            $direction == 'asc'
+        ?'<i class="fas fa-sort-down"></i>'
+        :'<i class="fas fa-sort-up"></i>',
+            $text
+        );
+    }
+
+    $queryString = http_build_query(array_merge(
+        request()->except(['sort','order']),
+        ['sort' => $column, 'order' => $reverse],
+        $params
+    ));
+
+    return sprintf(
+        '<a href="%s?%s">%s</a>',
+        urldecode(request()->url()),
+        $queryString,
+        $text
+    );
+}

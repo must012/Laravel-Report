@@ -83,50 +83,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('posts.index') }}" class="nav-link side-nav side-nav-2">중고책 거래</a>
+                    @include('posts.partial.search')
                 </li>
 
-                <ul class="list-group text-center pt-md-2 pb-md-2" id="tools" style="color: white;font-weight: bold">
-                    도구
-
-                    <li class="list-group-item tool-item" style="display: none">
-                        <a href="{{url('https://www.yjp.ac.kr/portal/main/index_noie.jsp')}}" class="nav-link side-nav"
-                           target="_blank">
-                            YJP<i class="fas fa-external-link-alt float-right"></i></a>
-                    </li>
-
-                    <li class="list-group-item tool-item" style="display: none;">
-                        <a href="{{url('https://yel.yjc.ac.kr/')}}" class="nav-link side-nav" target="_blank">YEL<i
-                                    class="fas fa-external-link-alt float-right"></i></a>
-                    </li>
-
-                    <li class="list-group-item tool-item" style="display: none;">
-                        <a href="{{ url('https://fontawesome.com/') }}" class="nav-link side-nav" target="_blank">FontAwesome<i
-                                    class="fas fa-external-link-alt float-right"></i></a>
-                    </li>
-
-                    <li class="list-group-item tool-item" style="display: none;">
-                        <a href="{{ url('http://bootstrap4.kr/') }}" class="nav-link side-nav" target="_blank">BootStrap<i
-                                    class="fas fa-external-link-alt float-right"></i></a>
-                    </li>
-
-                    <li class="list-group-item tool-item" style="display: none;">
-                        <a href="{{ url('https://jsfiddle.net/coligo/49gptnad/') }}" class="nav-link side-nav"
-                           target="_blank">JSFiddle<i
-                                    class="fas fa-external-link-alt float-right"></i></a>
-                    </li>
-
-                    <li class="list-group-item tool-item" style="display: none;">
-                        <a href="{{ url('https://www.evernote.com/client/web') }}" class="nav-link side-nav"
-                           target="_blank">Evernote<i
-                                    class="fas fa-external-link-alt float-right"></i></a>
-                    </li>
-
-                    <li class="list-group-item tool-item" style="display: none;">
-                        <a href="{{ url('https://github.com/must012') }}" class="nav-link side-nav" target="_blank"><i
-                                    class="fab fa-github fa-2x"></i></a>
-                    </li>
-                </ul>
             </ul>
         </nav>
 
@@ -146,13 +105,6 @@
 @yield('modal')
 
 <script>
-    var $target = $("#tools");
-
-    $target.click(function (e) {
-        var $item = $(".tool-item");
-        $item.slideToggle(200);
-    });
-
     $('.alert-info').ready(function () {
         $('.alert-info').fadeOut(2300);
     })

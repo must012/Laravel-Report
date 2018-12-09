@@ -1,5 +1,5 @@
 <ul class="list-group">
-    <li class="list-group-item comment-count border-0">댓글 {{ sizeof($comments) }}</li>
+    <li class="list-group-item comment-count border-0">댓글 {{$post->comment_count }}</li>
     @auth
         @include('posts.comments.partial.create')
     @else
@@ -38,9 +38,7 @@
                         $('#comment_' + commentId + ' .content-comment').addClass('text-info').fadeIn(1000, function () {
                             $(this).text('삭제된 댓글 입니다');
                         });
-                        // $('#comment_' + commentId).fadeOut(1000, function () {
-                        //     $(this).remove()
-                        // });
+
                     },
                     error: function () {
                         alert('error!');

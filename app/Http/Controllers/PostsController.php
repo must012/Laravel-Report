@@ -21,9 +21,22 @@ class PostsController extends Controller
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $list = Post::orderBy('id', 'desc')->paginate(10);
+        $query = Post::orderBy(
+            $request->input('sort', 'created_at'),
+            $request->input('order', 'desc')
+        );
+
+
+        if ($keyword = $request->input('search')) {
+            $raw = 'MATCH(title,content) AGAINST(? IN BOOLEAN MODE)';
+            $query = $query->whereRaw($raw, [$keyword]);
+        }
+
+
+//        $list = Post::orderBy('id', 'desc')->paginate(10);
+        $list = $query->paginate(10);
 
         return view('posts.list', compact('list'));
     }
@@ -87,6 +100,13 @@ class PostsController extends Controller
     {
         $comments = $post->comments()->with('replies')->withTrashed()->whereNull('parent_id')->oldest()->get();
 
+        if (auth()->user()) {
+            if (!$post->viewers()->whereViewer(auth()->user()->id)->exists()) {
+                $post->viewers()->create([
+                    'viewer' => auth()->user()->id
+                ]);
+            }
+        }
         return view('posts.detail', compact('post', 'comments'));
     }
 
@@ -115,6 +135,8 @@ class PostsController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
+        $this->authorize('update', $post);
+
         $post->update([
             'title' => $request->get('title'),
             'content' => $request->get('contents')
@@ -145,8 +167,8 @@ class PostsController extends Controller
     public function like(Request $request, Post $post)
     {
         $check = $request->input('like');
-        \Log::info('check = '.$check);
-        \Log::info('userid = '.$request->user()->id);
+        \Log::info('check = ' . $check);
+        \Log::info('userid = ' . $request->user()->id);
         $idCheck = $post->likes()->whereUserId($request->user()->id)->exists();
 
 
@@ -175,7 +197,7 @@ class PostsController extends Controller
         $check = !$check;
 
         return response()->json([
-            'value' => $post->likes()->where('liked',1)->count()
+            'value' => $post->likes()->where('liked', 1)->count()
         ]);
     }
 
